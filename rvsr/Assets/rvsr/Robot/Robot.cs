@@ -16,6 +16,8 @@ namespace rvsr.Robot
         public float boxcastSize = 2;
 
         public IRobotState state;
+        public float hitSpeed = 20;
+        public float hitDistance = 50;
 
         // Start is called before the first frame update
         private void Start()
