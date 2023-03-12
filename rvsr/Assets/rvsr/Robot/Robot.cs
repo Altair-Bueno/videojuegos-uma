@@ -1,13 +1,14 @@
 using rvsr.Robot.State;
 using rvsr.Robot.State.Patrol;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace rvsr.Robot
 {
     public class Robot : MonoBehaviour
     {
         public Rigidbody rigidbody;
-        public LayerMask layerMask;
+        public LayerMask rabbitLayerMask;
         public Missile missile;
 
         public float movementSpeed = 10;
@@ -43,7 +44,7 @@ namespace rvsr.Robot
 
             return Physics.BoxCast(transform.position + transform.forward * (extends / 2).magnitude, extends,
                 transform.forward, transform.rotation,
-                float.PositiveInfinity, layerMask);
+                float.PositiveInfinity, rabbitLayerMask);
         }
 
         public bool RabbitNoisesNearby()
