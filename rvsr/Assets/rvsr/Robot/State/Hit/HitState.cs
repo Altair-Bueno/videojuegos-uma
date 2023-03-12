@@ -1,5 +1,7 @@
 using rvsr.Robot.State.Patrol;
 
+// TODO HitState
+
 namespace rvsr.Robot.State.Hit
 {
     public class HitState : IRobotState

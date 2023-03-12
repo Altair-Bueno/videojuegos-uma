@@ -1,5 +1,7 @@
 using rvsr.Robot.State.Hit;
 
+// TODO pathfinding
+
 namespace rvsr.Robot.State.Walk
 {
     public class WalkState : IRobotState
