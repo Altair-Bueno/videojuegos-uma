@@ -1,5 +1,3 @@
-using rvsr.Robot.State;
-using rvsr.Robot;
 using rvsr.Robot.State.Hit;
 
 namespace rvsr.Robot.State.Walk
@@ -15,15 +13,12 @@ namespace rvsr.Robot.State.Walk
 
         public void Update()
         {
-            if (true)
-            {
-                // Escuchar sonido
-            }
+            // TODO Arrive to destination using pathfinding
+
+            if (robot.RabbitNoisesNearby())
+                robot.state = new WalkState(robot);
             else
-            {
-                // Golpear suelo
                 robot.state = new HitState(robot);
-            }
         }
     }
 }

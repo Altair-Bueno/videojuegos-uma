@@ -1,6 +1,5 @@
 using System;
 
-
 namespace rvsr.Robot.State.Attack
 {
     public class LaughState : IRobotState

@@ -1,7 +1,5 @@
 using rvsr.Robot.State.Attack;
 using rvsr.Robot.State.Walk;
-using UnityEngine;
-
 
 namespace rvsr.Robot.State.Patrol
 {
@@ -20,16 +18,14 @@ namespace rvsr.Robot.State.Patrol
         {
             state.Update();
 
-            if (robot.rabbitOnSight())
+            if (robot.RabbitOnSight())
             {
-                // Contacto visual con enemigo
-                Destroy();
+                robot.state.Destroy();
                 robot.state = new AttackState(robot);
             }
-            else if (false) // TODO condicion de walk state
+            else if (robot.RabbitNoisesNearby())
             {
-                // Escuchar sonido
-                Destroy();
+                robot.state.Destroy();
                 robot.state = new WalkState(robot);
             }
         }

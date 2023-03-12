@@ -1,7 +1,6 @@
-using System;
-using UnityEngine;
 using rvsr.Robot.State;
 using rvsr.Robot.State.Patrol;
+using UnityEngine;
 
 namespace rvsr.Robot
 {
@@ -9,7 +8,11 @@ namespace rvsr.Robot
     {
         public Rigidbody rigidbody;
         public LayerMask layerMask;
-        public float speed = 10;
+        public Missile missile;
+
+        public float movementSpeed = 10;
+        public float patrolMinDistance = 5;
+        public float patrolMaxDistance = 20;
         public float boxcastSize = 2;
 
         public IRobotState state;
@@ -32,13 +35,19 @@ namespace rvsr.Robot
             state.OnCollision(collision);
         }
 
-        public bool rabbitOnSight()
+        public bool RabbitOnSight()
         {
-            var extends = Vector3.one * this.boxcastSize;
+            var extends = Vector3.one * boxcastSize;
 
-            return Physics.BoxCast(this.transform.position + transform.forward * (extends / 2).magnitude, extends,
-                this.transform.forward, this.transform.rotation,
-                float.PositiveInfinity, this.layerMask);
+            return Physics.BoxCast(transform.position + transform.forward * (extends / 2).magnitude, extends,
+                transform.forward, transform.rotation,
+                float.PositiveInfinity, layerMask);
+        }
+
+        public bool RabbitNoisesNearby()
+        {
+            // TODO rabbit noises
+            return false;
         }
 
         /*

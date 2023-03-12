@@ -1,31 +1,27 @@
-using UnityEngine;
-
 namespace rvsr.Rabbit.State
 {
     public class DanceState : IRabbitState
     {
-        public RabbitState rabbitState;
+        public Rabbit rabbit;
 
-        public DanceState(RabbitState rabbitState)
+        public DanceState(Rabbit rabbit)
         {
-            this.rabbitState = rabbitState;
-            this.rabbitState.animation.enabled = true;
+            this.rabbit = rabbit;
+            this.rabbit.animation.enabled = true;
         }
 
         public void Update()
         {
-            if (Physics.Raycast(rabbitState.transform.position, rabbitState.transform.forward, float.PositiveInfinity,
-                    rabbitState.layerMask))
+            if (rabbit.RobotOnSight())
             {
-                // Contacto visual
                 Destroy();
-                rabbitState.state = new ScapeState(rabbitState);
+                rabbit.state = new ScapeState(rabbit);
             }
         }
 
         public void Destroy()
         {
-            rabbitState.animation.enabled = false;
+            rabbit.animation.enabled = false;
         }
     }
 }

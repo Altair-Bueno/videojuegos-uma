@@ -13,7 +13,13 @@ namespace rvsr.Robot.State.Hit
 
         public void Update()
         {
-            if (false) robot.state = new PatrolState(robot);
+            if (false)
+            {
+                // TODO Golpe en el suelo
+            }
+
+            robot.state.Destroy();
+            robot.state = new PatrolState(robot);
         }
     }
 }

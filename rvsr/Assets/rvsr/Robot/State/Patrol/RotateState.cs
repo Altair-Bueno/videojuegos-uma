@@ -1,13 +1,13 @@
 using UnityEngine;
 
-
 namespace rvsr.Robot.State.Patrol
 {
     public class RotateState : IRobotState
     {
+        public float direction;
         public PatrolState patrolState;
         public Robot robot;
-        public float direction;
+
         private float timer;
 
         public RotateState(Robot robot, PatrolState patrolState)
@@ -21,10 +21,14 @@ namespace rvsr.Robot.State.Patrol
 
         public void Update()
         {
-            robot.transform.Rotate(Vector3.up * direction, Time.deltaTime * robot.speed);
+            robot.transform.Rotate(Vector3.up * direction, Time.deltaTime * robot.movementSpeed);
 
             timer -= Time.deltaTime;
-            if (timer <= 0) patrolState.state = new ForwardState(robot, patrolState);
+            if (timer <= 0)
+            {
+                patrolState.state.Destroy();
+                patrolState.state = new ForwardState(robot, patrolState);
+            }
         }
     }
 }

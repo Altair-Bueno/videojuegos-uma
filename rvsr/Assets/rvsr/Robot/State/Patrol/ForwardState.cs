@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace rvsr.Robot.State.Patrol
 {
     public class ForwardState : IRobotState
@@ -13,17 +12,21 @@ namespace rvsr.Robot.State.Patrol
         {
             this.robot = robot;
             this.patrolState = patrolState;
-            distance = Random.Range(5, 15);
+            distance = Random.Range(this.robot.patrolMinDistance, this.robot.patrolMaxDistance);
         }
 
         public void Update()
         {
-            var moved = robot.speed * Time.deltaTime * robot.transform.forward;
+            var moved = robot.movementSpeed * Time.deltaTime * robot.transform.forward;
             robot.rigidbody.MovePosition(robot.transform.position + moved);
 
             distance -= moved.magnitude;
 
-            if (distance <= 0) patrolState.state = new RotateState(robot, patrolState);
+            if (distance <= 0)
+            {
+                patrolState.state.Destroy();
+                patrolState.state = new RotateState(robot, patrolState);
+            }
         }
 
         public void OnCollision(Collision collision)
@@ -32,6 +35,7 @@ namespace rvsr.Robot.State.Patrol
             if (collision.gameObject.CompareTag("Terrain")) return;
 
             // Stop movement if we reach a wall
+            patrolState.state.Destroy();
             patrolState.state = new RotateState(robot, patrolState);
         }
     }

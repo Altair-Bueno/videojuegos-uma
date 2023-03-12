@@ -1,26 +1,46 @@
+using UnityEngine;
+
+// TODO HideState
+
 namespace rvsr.Rabbit.State
 {
     public class HideState : IRabbitState
     {
-        public RabbitState rabbitState;
+        public Rabbit rabbit;
 
-        public HideState(RabbitState rabbitState)
+        private float timer;
+
+        public HideState(Rabbit rabbit)
         {
-            this.rabbitState = rabbitState;
+            this.rabbit = rabbit;
+            timer = Random.Range(this.rabbit.hideMinDuration, this.rabbit.hideMaxDuration);
+            // TODO hide rabbit
         }
 
         public void Update()
         {
-            if (true || true)
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
             {
-                // Timeout/golpe
                 Destroy();
-                rabbitState.state = new UnhideState(rabbitState);
+                rabbit.state = new UnhideState(rabbit);
             }
         }
 
         public void Destroy()
         {
+            // TODO unhide rabbit
+        }
+
+        public void OnCollision(Collision collision)
+        {
+            // TODO hit collision
+            if (false)
+            {
+                Destroy();
+                rabbit.state = new UnhideState(rabbit);
+            }
         }
     }
 }

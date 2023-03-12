@@ -1,5 +1,4 @@
 using rvsr.Robot.State.Patrol;
-using UnityEngine;
 
 namespace rvsr.Robot.State.Attack
 {
@@ -18,15 +17,13 @@ namespace rvsr.Robot.State.Attack
         {
             state.Update();
 
-            if (robot.rabbitOnSight())
+            if (robot.RabbitOnSight())
             {
-                // Contacto visual con enemigo
-                // NOPE
+                // NOP
             }
             else
             {
-                // Otherwise
-                Destroy();
+                robot.state.Destroy();
                 robot.state = new PatrolState(robot);
             }
         }

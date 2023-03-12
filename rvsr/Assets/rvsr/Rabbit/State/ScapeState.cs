@@ -1,35 +1,33 @@
-using UnityEngine;
+
+
+// TODO ScapeState
 
 namespace rvsr.Rabbit.State
 {
     public class ScapeState : IRabbitState
     {
-        public RabbitState rabbitState;
+        public Rabbit rabbit;
 
-        public ScapeState(RabbitState rabbitState)
+        public ScapeState(Rabbit rabbit)
         {
-            this.rabbitState = rabbitState;
+            this.rabbit = rabbit;
         }
 
         public void Update()
         {
-            if (Physics.Raycast(rabbitState.transform.position, rabbitState.transform.forward, float.PositiveInfinity,
-                    rabbitState.layerMask))
+            if (rabbit.RobotOnSight())
             {
-                // Contacto visual
                 // NOP
             }
-            else if (false)
+            else if (rabbit.MissileNearby())
             {
-                // Disparo en el aire
-                Destroy();
-                rabbitState.state = new HideState(rabbitState);
+                rabbit.state.Destroy();
+                rabbit.state = new HideState(rabbit);
             }
             else
             {
-                // Otherwise
-                Destroy();
-                rabbitState.state = new DanceState(rabbitState);
+                rabbit.state.Destroy();
+                rabbit.state = new DanceState(rabbit);
             }
         }
 
