@@ -10,6 +10,7 @@ namespace rvsr.Robot.State.Patrol
 
         public ForwardState(Robot robot, PatrolState patrolState)
         {
+            Debug.Log("Fordward");
             this.robot = robot;
             this.patrolState = patrolState;
             distance = Random.Range(this.robot.patrolMinDistance, this.robot.patrolMaxDistance);

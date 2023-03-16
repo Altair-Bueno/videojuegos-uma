@@ -1,4 +1,5 @@
 using rvsr.Robot.State.Patrol;
+using UnityEngine;
 
 namespace rvsr.Robot.State.Attack
 {
@@ -9,6 +10,7 @@ namespace rvsr.Robot.State.Attack
 
         public AttackState(Robot robot)
         {
+            Debug.Log("Attack");
             this.robot = robot;
             state = new MissileState(robot, this);
         }

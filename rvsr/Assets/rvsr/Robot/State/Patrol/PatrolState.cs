@@ -1,5 +1,6 @@
 using rvsr.Robot.State.Attack;
 using rvsr.Robot.State.Walk;
+using UnityEngine;
 
 namespace rvsr.Robot.State.Patrol
 {
@@ -10,6 +11,7 @@ namespace rvsr.Robot.State.Patrol
 
         public PatrolState(Robot robot)
         {
+            Debug.Log("Patrol");
             this.robot = robot;
             state = new RotateState(robot, this);
         }
@@ -23,7 +25,7 @@ namespace rvsr.Robot.State.Patrol
                 robot.state.Destroy();
                 robot.state = new AttackState(robot);
             }
-            else if (robot.RabbitNoisesNearby())
+            else if (robot.NearbyRabbitsDancing().Length != 0)
             {
                 robot.state.Destroy();
                 robot.state = new WalkState(robot);

@@ -12,6 +12,7 @@ namespace rvsr.Robot.State.Patrol
 
         public RotateState(Robot robot, PatrolState patrolState)
         {
+            Debug.Log("Rotate");
             this.robot = robot;
             this.patrolState = patrolState;
 

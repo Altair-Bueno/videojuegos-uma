@@ -1,8 +1,6 @@
 using rvsr.Robot.State.Patrol;
 using UnityEngine;
 
-// TODO Sphere colider moves robot
-
 namespace rvsr.Robot.State.Hit
 {
     public class HitState : IRobotState
@@ -13,8 +11,11 @@ namespace rvsr.Robot.State.Hit
 
         public HitState(Robot robot)
         {
+            Debug.Log("Hit");
             this.robot = robot;
             sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            sphere.layer = LayerMask.NameToLayer("HitSphere");
+            sphere.gameObject.GetComponent<Renderer>().material = robot.hitSphereMaterial;
             sphere.transform.position = robot.transform.position + Vector3.down * 0.75f;
             sphere.transform.localScale = Vector3.zero;
         }

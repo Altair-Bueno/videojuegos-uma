@@ -1,6 +1,6 @@
 using System;
-
-// TODO update robot material
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace rvsr.Robot.State.Attack
 {
@@ -9,22 +9,34 @@ namespace rvsr.Robot.State.Attack
         private AttackState attackState;
         private Robot robot;
 
+        private Material oldMaterial;
+        private float timer;
 
         public LaughState(Robot robot, AttackState attackState)
         {
+            Debug.Log("Laugh");
             this.robot = robot;
             this.attackState = attackState;
-            // TODO Add mesh
+            timer = Random.Range(2,4);
+
+            oldMaterial = this.robot.renderer.material;
+            robot.renderer.material = robot.laughStateMaterial;
         }
 
-        public void Update(Robot robot)
+        public void Update()
         {
-            throw new NotImplementedException();
+            timer -= Time.deltaTime;
+
+            if (timer <= 0)
+            {
+                Destroy();
+                attackState.state = new MissileState(robot, attackState);
+            }
         }
 
-        public void Destroy(Robot robot)
+        public void Destroy()
         {
-            // TODO remove mesh
+            robot.renderer.material = oldMaterial;
         }
     }
 }

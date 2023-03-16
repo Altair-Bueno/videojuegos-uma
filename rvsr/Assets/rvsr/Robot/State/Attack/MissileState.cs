@@ -1,7 +1,5 @@
 using UnityEngine;
 
-// TODO missile prefab takes callback instead
-
 namespace rvsr.Robot.State.Attack
 {
     public class MissileState : IRobotState
@@ -13,6 +11,7 @@ namespace rvsr.Robot.State.Attack
 
         public MissileState(Robot robot, AttackState attackState)
         {
+            Debug.Log("Missile");
             this.robot = robot;
             this.attackState = attackState;
 

@@ -1,4 +1,6 @@
+using System;
 using rvsr.Robot.State;
+using rvsr.Robot.State.Hit;
 using rvsr.Robot.State.Patrol;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -7,23 +9,37 @@ namespace rvsr.Robot
 {
     public class Robot : MonoBehaviour
     {
-        public Rigidbody rigidbody;
-        public LayerMask rabbitLayerMask;
-        public Missile missile;
-
-        public float movementSpeed = 10;
-        public float patrolMinDistance = 5;
-        public float patrolMaxDistance = 20;
-        public float boxcastSize = 2;
-
         public IRobotState state;
+        
+        // Components
+        public Rigidbody rigidbody;
+        public Renderer renderer;
+        
+        // General variables
+        public LayerMask rabbitLayerMask;
+        public LayerMask rabbitNoisesLayerMask;
+        public float boxcastSize = 2;
+        public float movementSpeed = 10;
+        public float hearRadious = 10;
+
+        // Attack state
+        public Missile missile;
+        public Material laughStateMaterial;
+        
+        // Hit state
         public float hitSpeed = 20;
         public float hitDistance = 50;
+        public Material hitSphereMaterial;
 
+        // Patrol state
+        public float patrolMinDistance = 5;
+        public float patrolMaxDistance = 20;
+        
         // Start is called before the first frame update
         private void Start()
         {
             rigidbody = GetComponent<Rigidbody>();
+            renderer = GetComponent<Renderer>();
             state = new PatrolState(this);
         }
 
@@ -40,17 +56,25 @@ namespace rvsr.Robot
 
         public bool RabbitOnSight()
         {
-            var extends = Vector3.one * boxcastSize;
+            /*
+             var extends = Vector3.one * boxcastSize;
 
             return Physics.BoxCast(transform.position + transform.forward * (extends / 2).magnitude, extends,
                 transform.forward, transform.rotation,
                 float.PositiveInfinity, rabbitLayerMask);
+                */
+            return Physics.Raycast(transform.position, transform.forward, float.PositiveInfinity, rabbitLayerMask);
         }
 
-        public bool RabbitNoisesNearby()
+        public Collider[] NearbyRabbitsDancing()
         {
-            // TODO rabbit noises
-            return false;
+            return Physics.OverlapSphere(transform.position, hearRadious, rabbitNoisesLayerMask);
+        }
+
+        public void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(transform.position, transform.forward * 10 + transform.position);
+            Gizmos.DrawWireSphere(transform.position, hearRadious);
         }
 
         /*
