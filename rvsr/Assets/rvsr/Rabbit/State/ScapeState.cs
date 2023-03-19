@@ -1,6 +1,5 @@
 
-
-// TODO ScapeState
+using UnityEngine;
 
 namespace rvsr.Rabbit.State
 {
@@ -10,14 +9,19 @@ namespace rvsr.Rabbit.State
 
         public ScapeState(Rabbit rabbit)
         {
+            Debug.Log("Rabbit Scape");
+
             this.rabbit = rabbit;
         }
 
         public void Update()
         {
-            if (rabbit.RobotOnSight())
+            var nearbyRobots = rabbit.NearbyRobots();
+            if (nearbyRobots.Length > 0)
             {
-                // NOP
+                var robot = nearbyRobots[0];
+                var difference = rabbit.transform.position - robot.transform.position;
+                rabbit.rigidbody.MovePosition(rabbit.transform.position + this.rabbit.movementSpeed * Time.deltaTime * difference.normalized);
             }
             else if (rabbit.MissileNearby())
             {

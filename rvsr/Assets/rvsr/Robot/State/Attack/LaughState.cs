@@ -14,7 +14,7 @@ namespace rvsr.Robot.State.Attack
 
         public LaughState(Robot robot, AttackState attackState)
         {
-            Debug.Log("Laugh");
+            Debug.Log("Robot: Laugh");
             this.robot = robot;
             this.attackState = attackState;
             timer = Random.Range(2,4);

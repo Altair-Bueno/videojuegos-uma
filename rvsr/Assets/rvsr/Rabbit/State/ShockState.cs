@@ -2,16 +2,18 @@ using UnityEngine;
 
 namespace rvsr.Rabbit.State
 {
-    public class UnhideState : IRabbitState
+    public class ShockState : IRabbitState
     {
         public Rabbit rabbit;
 
         private float timer;
 
-        public UnhideState(Rabbit rabbit)
+        public ShockState(Rabbit rabbit)
         {
+            Debug.Log("Rabbit Shock");
+
             this.rabbit = rabbit;
-            timer = Random.Range(rabbit.unHideMinDuration, rabbit.unHideMaxDuration);
+            timer = Random.Range(rabbit.shockMinDuration, rabbit.shockMaxDuration);
         }
 
         public void Update()
@@ -23,7 +25,7 @@ namespace rvsr.Rabbit.State
                 // NOP
             }
 
-            if (rabbit.RobotOnSight())
+            if (rabbit.RobotNearby())
             {
                 rabbit.state.Destroy();
                 rabbit.state = new ScapeState(rabbit);

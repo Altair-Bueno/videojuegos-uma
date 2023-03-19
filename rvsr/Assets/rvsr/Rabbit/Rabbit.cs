@@ -1,24 +1,32 @@
 using rvsr.Rabbit.State;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace rvsr.Rabbit
 {
     public class Rabbit : MonoBehaviour
     {
         public Animation animation;
+        public Collider collider;
+        public Rigidbody rigidbody;
+        
         public LayerMask robotLayerMask;
+        public LayerMask missileLayerMask;
 
-        public float boxcastSize = 2;
-        public float hideMinDuration = 2;
-        public float hideMaxDuration = 7;
-        public float unHideMinDuration = 1;
-        public float unHideMaxDuration = 4;
+        public float movementSpeed;
+        public float hearRadious = 10;
+        public float hideDuration = 3;
+        public float shockMinDuration = 1;
+        public float shockMaxDuration = 4;
+        public float hideAnimationDuration = 0.35f;
+        public AnimationCurve hideAnimationCurve;
         public IRabbitState state;
 
         // Start is called before the first frame update
         private void Start()
         {
-            state = new DanceState(this);
+            //state = new DanceState(this);
+            state = new ScapeState(this);
         }
 
         // Update is called once per frame
@@ -32,20 +40,27 @@ namespace rvsr.Rabbit
             state.OnCollision(collision);
         }
 
-
-        public bool RobotOnSight()
+        public Collider[] NearbyRobots()
         {
-            var extends = Vector3.one * boxcastSize;
+            return Physics.OverlapSphere(this.transform.position, hearRadious, robotLayerMask);
+        }
 
-            return Physics.BoxCast(transform.position + transform.forward * (extends / 2).magnitude, extends,
-                transform.forward, transform.rotation,
-                float.PositiveInfinity, robotLayerMask);
+
+        public bool RobotNearby()
+        {
+            return NearbyRobots().Length > 0;
         }
 
         public bool MissileNearby()
         {
-            // TODO missile nearby
-            return false;
+            return Physics.OverlapSphere(this.transform.position, hearRadious, missileLayerMask).Length > 0;
         }
+        
+        public void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(transform.position, transform.forward * 10 + transform.position);
+            Gizmos.DrawWireSphere(transform.position, hearRadious);
+        }
+
     }
 }

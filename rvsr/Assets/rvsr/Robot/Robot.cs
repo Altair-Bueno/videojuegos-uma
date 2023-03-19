@@ -68,7 +68,15 @@ namespace rvsr.Robot
                 transform.forward, transform.rotation,
                 float.PositiveInfinity, rabbitLayerMask);
                 */
-            return Physics.Raycast(transform.position, transform.forward, float.PositiveInfinity, rabbitLayerMask);
+            for (var i = -0.5f; i < 0.5; i+=.1f)
+            {
+                var rot = Quaternion.AngleAxis(i,transform.forward);
+                var direction = rot * transform.forward;
+                var temp = Physics.Raycast(transform.position, direction, float.PositiveInfinity, rabbitLayerMask);
+                if (temp) return temp;
+            }
+
+            return false;
         }
 
         public Collider[] NearbyRabbitsDancing()

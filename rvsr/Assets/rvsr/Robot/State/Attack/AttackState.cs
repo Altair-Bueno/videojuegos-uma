@@ -10,7 +10,7 @@ namespace rvsr.Robot.State.Attack
 
         public AttackState(Robot robot)
         {
-            Debug.Log("Attack");
+            Debug.Log("Robot: Attack");
             this.robot = robot;
             state = new MissileState(robot, this);
         }

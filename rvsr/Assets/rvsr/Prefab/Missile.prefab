@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1374886988837872441}
   - component: {fileID: 3550738753654797755}
   - component: {fileID: -4162310245941050525}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: -4162310245941050525}
-  duration: 5
+  duration: 10.02
   speed: 10
 --- !u!54 &-4162310245941050525
 Rigidbody:

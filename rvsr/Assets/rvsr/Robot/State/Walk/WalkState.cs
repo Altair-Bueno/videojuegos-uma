@@ -10,8 +10,9 @@ namespace rvsr.Robot.State.Walk
 
         public WalkState(Robot robot)
         {
-            Debug.Log("Walk");
+            Debug.Log("Robot: Walk");
             this.robot = robot;
+            robot.navMeshAgent.enabled = true;
         }
 
         public void Update()
@@ -37,6 +38,7 @@ namespace rvsr.Robot.State.Walk
         public void Destroy()
         {
             robot.navMeshAgent.isStopped = true;
+            robot.navMeshAgent.enabled = false;
         }
     }
 }

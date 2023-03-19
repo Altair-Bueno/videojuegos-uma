@@ -11,7 +11,7 @@ namespace rvsr.Robot.State.Hit
 
         public HitState(Robot robot)
         {
-            Debug.Log("Hit");
+            Debug.Log("Robot: Hit");
             this.robot = robot;
             sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             sphere.layer = LayerMask.NameToLayer("HitSphere");

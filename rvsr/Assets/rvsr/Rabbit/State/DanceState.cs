@@ -10,6 +10,7 @@ namespace rvsr.Rabbit.State
 
         public DanceState(Rabbit rabbit)
         {
+            Debug.Log("Rabbit Dance");
             this.rabbit = rabbit;
             this.rabbit.animation.enabled = true;
             rabbitDance = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -23,10 +24,14 @@ namespace rvsr.Rabbit.State
 
         public void Update()
         {
-            if (rabbit.RobotOnSight())
+            if (rabbit.RobotNearby())
             {
                 Destroy();
                 rabbit.state = new ScapeState(rabbit);
+            }else if (rabbit.MissileNearby())
+            {
+                Destroy();
+                rabbit.state = new HideState(rabbit);
             }
         }
 
