@@ -18,6 +18,7 @@ namespace rvsr.Rabbit.State
             rabbitDance.transform.position = rabbit.transform.position;
             rabbitDance.transform.localScale = .01f * Vector3.one;
             rabbitDance.GetComponent<Renderer>().enabled = false;
+            rabbitDance.transform.SetParent(rabbit.transform);
         }
 
         public void Update()
