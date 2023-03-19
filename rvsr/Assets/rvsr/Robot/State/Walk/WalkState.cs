@@ -2,8 +2,6 @@ using rvsr.Robot.State.Attack;
 using rvsr.Robot.State.Hit;
 using UnityEngine;
 
-// TODO pathfinding
-
 namespace rvsr.Robot.State.Walk
 {
     public class WalkState : IRobotState
@@ -18,15 +16,16 @@ namespace rvsr.Robot.State.Walk
 
         public void Update()
         {
-            // TODO Arrive to destination using pathfinding
+            var nearbyRabbitsDancing = robot.NearbyRabbitsDancing();
             if (robot.RabbitOnSight())
             {
                 Destroy();
                 robot.state = new AttackState(robot);
             }
-            else if (robot.NearbyRabbitsDancing().Length != 0)
+            else if (nearbyRabbitsDancing.Length != 0)
             {
-                // NOP
+                var rabbitCollider = nearbyRabbitsDancing[0];
+                robot.navMeshAgent.SetDestination(rabbitCollider.transform.position);
             }
             else
             {
@@ -37,6 +36,7 @@ namespace rvsr.Robot.State.Walk
 
         public void Destroy()
         {
+            robot.navMeshAgent.isStopped = true;
         }
     }
 }

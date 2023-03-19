@@ -15,10 +15,9 @@ namespace rvsr.Robot.State.Attack
             this.robot = robot;
             this.attackState = attackState;
 
-
-            var q = this.robot.transform.rotation;
-            missile = Object.Instantiate(this.robot.missile,
-                robot.transform.position + robot.transform.forward * 2.5f + Vector3.up * 0.2f, q);
+            var pos = robot.transform.position + robot.transform.forward * 2.5f + Vector3.up * 0.2f;
+            var rot = robot.transform.rotation;
+            missile = Object.Instantiate(this.robot.missile, pos, rot);
             missile.missileState = this;
         }
 

@@ -3,6 +3,7 @@ using rvsr.Robot.State;
 using rvsr.Robot.State.Hit;
 using rvsr.Robot.State.Patrol;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace rvsr.Robot
@@ -14,11 +15,11 @@ namespace rvsr.Robot
         // Components
         public Rigidbody rigidbody;
         public Renderer renderer;
+        public NavMeshAgent navMeshAgent;
         
         // General variables
         public LayerMask rabbitLayerMask;
         public LayerMask rabbitNoisesLayerMask;
-        public float boxcastSize = 2;
         public float movementSpeed = 10;
         public float hearRadious = 10;
 
@@ -40,6 +41,10 @@ namespace rvsr.Robot
         {
             rigidbody = GetComponent<Rigidbody>();
             renderer = GetComponent<Renderer>();
+            
+            // Set up components
+            this.navMeshAgent.speed = this.movementSpeed;
+
             state = new PatrolState(this);
         }
 
