@@ -35,6 +35,15 @@ namespace rvsr.Rabbit.State
             }
         }
 
+        public void OnCollision(Collision collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("HitSphere"))
+            {
+                this.rabbit.state.Destroy();
+                rabbit.state = new ShockState(rabbit);
+            }
+        }
+
         public void Destroy()
         {
         }

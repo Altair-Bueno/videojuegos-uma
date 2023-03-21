@@ -6,21 +6,26 @@ namespace rvsr.Rabbit
 {
     public class Rabbit : MonoBehaviour
     {
+        public IRabbitState state;
+        
+        // Components
         public Animation animation;
         public Collider collider;
         public Rigidbody rigidbody;
         
+        // General variables
         public LayerMask robotLayerMask;
         public LayerMask missileLayerMask;
-
         public float movementSpeed;
         public float hearRadious = 10;
-        public float hideDuration = 3;
+        
+        // Shock state
         public float shockMinDuration = 1;
         public float shockMaxDuration = 4;
+        // Hide state
+        public float hideDuration = 3;
         public float hideAnimationDuration = 0.35f;
         public AnimationCurve hideAnimationCurve;
-        public IRabbitState state;
 
         // Start is called before the first frame update
         private void Start()
@@ -35,7 +40,7 @@ namespace rvsr.Rabbit
             state.Update();
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnCollisionStay(Collision collision)
         {
             state.OnCollision(collision);
         }
@@ -58,7 +63,7 @@ namespace rvsr.Rabbit
         
         public void OnDrawGizmos()
         {
-            Gizmos.DrawLine(transform.position, transform.forward * 10 + transform.position);
+            //Gizmos.DrawLine(transform.position, transform.forward * 10 + transform.position);
             Gizmos.DrawWireSphere(transform.position, hearRadious);
         }
 
