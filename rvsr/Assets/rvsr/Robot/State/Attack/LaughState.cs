@@ -17,7 +17,7 @@ namespace rvsr.Robot.State.Attack
             Debug.Log("Robot: Laugh");
             this.robot = robot;
             this.attackState = attackState;
-            timer = Random.Range(2,4);
+            timer = Random.Range(robot.laughMinDuration,robot.laughMaxDuration);
 
             oldMaterial = this.robot.renderer.material;
             robot.renderer.material = robot.laughStateMaterial;

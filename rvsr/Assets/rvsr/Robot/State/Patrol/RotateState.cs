@@ -16,7 +16,7 @@ namespace rvsr.Robot.State.Patrol
             this.robot = robot;
             this.patrolState = patrolState;
 
-            timer = Random.Range(2, 10);
+            timer = Random.Range(robot.rotateMinDuration, robot.rotateMaxDuration);
             direction = Random.Range(0, 2) == 0 ? 1 : -1;
         }
 

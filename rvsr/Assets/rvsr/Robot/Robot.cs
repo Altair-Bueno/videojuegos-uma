@@ -26,6 +26,8 @@ namespace rvsr.Robot
         // Attack state
         public Missile missile;
         public Material laughStateMaterial;
+        public float laughMinDuration = 2;
+        public float laughMaxDuration = 6;
         
         // Hit state
         public float hitSpeed = 20;
@@ -35,7 +37,10 @@ namespace rvsr.Robot
         // Patrol state
         public float patrolMinDistance = 5;
         public float patrolMaxDistance = 20;
-        
+        public float rotateMinDuration = 2;
+        public float rotateMaxDuration = 7;
+
+
         // Start is called before the first frame update
         private void Start()
         {
@@ -54,7 +59,7 @@ namespace rvsr.Robot
             state.Update();
         }
 
-        private void OnCollisionEnter(Collision collision)
+        private void OnCollisionStay(Collision collision)
         {
             state.OnCollision(collision);
         }
@@ -89,14 +94,5 @@ namespace rvsr.Robot
             Gizmos.DrawLine(transform.position, transform.forward * 10 + transform.position);
             Gizmos.DrawWireSphere(transform.position, hearRadious);
         }
-
-        /*
-        private void OnDrawGizmos()
-        {
-            var extends = Vector3.one * this.boxcastSize * 2;
-
-            Gizmos.DrawWireCube(this.transform.position + transform.forward * (extends).magnitude / 2, extends);
-            //Gizmos.DrawWireSphere(this.transform.position, boxcastSize);
-        }*/
     }
 }
