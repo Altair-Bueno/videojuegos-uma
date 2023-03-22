@@ -32,7 +32,7 @@ namespace rvsr.Rabbit
         public AnimationCurve hideAnimationCurve;
         // Scape state
         [Range(0,100)]
-        public int scapeLuck = 10;
+        public int dodgeLuck = 10;
 
         // Start is called before the first frame update
         private void Start()
@@ -40,7 +40,6 @@ namespace rvsr.Rabbit
             state = new DanceState(this);
 
             navMeshAgent.speed = movementSpeed;
-            //state = new ScapeState(this);
         }
 
         // Update is called once per frame

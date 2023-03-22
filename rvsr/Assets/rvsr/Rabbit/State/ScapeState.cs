@@ -15,7 +15,7 @@ namespace rvsr.Rabbit.State
 
             this.rabbit = rabbit;
 
-            canDodge = Random.Range(0, 100) <= this.rabbit.scapeLuck;
+            canDodge = Random.Range(0, 100) <= this.rabbit.dodgeLuck;
 
             this.rabbit.navMeshAgent.enabled = true;
             var destinationCampfire = rabbit.campFires[Random.Range(0, rabbit.campFires.Length)];
