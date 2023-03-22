@@ -24,8 +24,7 @@ namespace rvsr.Rabbit.State
             {
                 // NOP
             }
-
-            if (rabbit.RobotNearby())
+            else if (rabbit.RobotNearby())
             {
                 rabbit.state.Destroy();
                 rabbit.state = new ScapeState(rabbit);
@@ -34,6 +33,19 @@ namespace rvsr.Rabbit.State
             {
                 rabbit.state.Destroy();
                 rabbit.state = new DanceState(rabbit);
+            }
+        }
+        
+        
+        public void OnCollision(Collision collision)
+        {
+            var hitSphereLayer = LayerMask.NameToLayer("HitSphere");
+            var missileLayer = LayerMask.NameToLayer("Missile");
+            
+            if (collision.gameObject.layer == hitSphereLayer || collision.gameObject.layer == missileLayer)
+            {
+                this.rabbit.state.Destroy();
+                rabbit.state = new ShockState(rabbit);
             }
         }
     }

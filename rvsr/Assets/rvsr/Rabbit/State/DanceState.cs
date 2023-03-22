@@ -24,14 +24,10 @@ namespace rvsr.Rabbit.State
 
         public void Update()
         {
-            if (rabbit.RobotNearby())
+            if (rabbit.RobotNearby() || rabbit.MissileNearby())
             {
                 Destroy();
                 rabbit.state = new ScapeState(rabbit);
-            }else if (rabbit.MissileNearby())
-            {
-                Destroy();
-                rabbit.state = new HideState(rabbit);
             }
         }
 
@@ -43,7 +39,10 @@ namespace rvsr.Rabbit.State
         
         public void OnCollision(Collision collision)
         {
-            if (collision.gameObject.layer == LayerMask.NameToLayer("HitSphere"))
+            var hitSphereLayer = LayerMask.NameToLayer("HitSphere");
+            var missileLayer = LayerMask.NameToLayer("Missile");
+            
+            if (collision.gameObject.layer == hitSphereLayer || collision.gameObject.layer == missileLayer)
             {
                 this.rabbit.state.Destroy();
                 rabbit.state = new ShockState(rabbit);
