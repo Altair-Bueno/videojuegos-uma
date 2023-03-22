@@ -28,7 +28,7 @@ namespace rvsr.Rabbit.State
             if (canDodge && missileNearby)
             {
                 rabbit.state.Destroy();
-                rabbit.state = new HideState(rabbit);
+                rabbit.state = new DodgeState(rabbit);
             }
             else if (missileNearby)
             {
