@@ -31,7 +31,7 @@ public class Missile : MonoBehaviour
         rigidbody.MovePosition(transform.position + moved);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Rabbit"))
         {
