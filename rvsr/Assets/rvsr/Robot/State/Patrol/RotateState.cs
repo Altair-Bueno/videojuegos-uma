@@ -22,7 +22,8 @@ namespace rvsr.Robot.State.Patrol
 
         public void Update()
         {
-            robot.transform.Rotate(Vector3.up * direction, Time.deltaTime * robot.movementSpeed);
+            robot.rigidbody.MoveRotation(robot.rigidbody.rotation * Quaternion.AngleAxis(Time.deltaTime * robot.movementSpeed * direction, Vector3.up));
+            //robot.transform.Rotate(Vector3.up * direction, Time.deltaTime * robot.movementSpeed);
 
             timer -= Time.deltaTime;
             if (timer <= 0)

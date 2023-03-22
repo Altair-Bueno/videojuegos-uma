@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using rvsr.Robot.State;
 using rvsr.Robot.State.Hit;
 using rvsr.Robot.State.Patrol;
@@ -11,12 +12,13 @@ namespace rvsr.Robot
     public class Robot : MonoBehaviour
     {
         public IRobotState state;
-        
+
         // Components
         public Rigidbody rigidbody;
         public Renderer renderer;
         public NavMeshAgent navMeshAgent;
-        
+        public GameObject nose;
+
         // General variables
         public LayerMask rabbitLayerMask;
         public LayerMask rabbitNoisesLayerMask;
@@ -28,7 +30,7 @@ namespace rvsr.Robot
         public Material laughStateMaterial;
         public float laughMinDuration = 2;
         public float laughMaxDuration = 6;
-        
+
         // Hit state
         public float hitSpeed = 20;
         public float hitDistance = 50;
@@ -46,7 +48,7 @@ namespace rvsr.Robot
         {
             rigidbody = GetComponent<Rigidbody>();
             renderer = GetComponent<Renderer>();
-            
+
             // Set up components
             this.navMeshAgent.speed = this.movementSpeed;
 
@@ -73,15 +75,14 @@ namespace rvsr.Robot
                 transform.forward, transform.rotation,
                 float.PositiveInfinity, rabbitLayerMask);
                 */
-            for (var i = -0.5f; i < 0.5; i+=.1f)
-            {
-                var rot = Quaternion.AngleAxis(i,transform.forward);
-                var direction = rot * transform.forward;
-                var temp = Physics.Raycast(transform.position, direction, float.PositiveInfinity, rabbitLayerMask);
-                if (temp) return temp;
-            }
+            var raycastHits = Physics.RaycastAll(transform.position, transform.forward, float.PositiveInfinity,
+                rabbitLayerMask);
 
-            return false;
+            var (tag, _) = raycastHits
+                .Select(x => (x.transform.tag, (x.transform.position - transform.position).magnitude))
+                .Aggregate(("", float.PositiveInfinity), (acc, next) => acc.Item2 < next.Item2 ? acc : next);
+
+            return tag == "Rabbit";
         }
 
         public Collider[] NearbyRabbitsDancing()
@@ -91,7 +92,8 @@ namespace rvsr.Robot
 
         public void OnDrawGizmos()
         {
-            Gizmos.DrawLine(transform.position, transform.forward * 10 + transform.position);
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.forward * hearRadious + transform.position);
             Gizmos.DrawWireSphere(transform.position, hearRadious);
         }
     }

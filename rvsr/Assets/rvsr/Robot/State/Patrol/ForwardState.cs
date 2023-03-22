@@ -36,6 +36,7 @@ namespace rvsr.Robot.State.Patrol
             if (collision.gameObject.CompareTag("Terrain")) return;
 
             // Stop movement if we reach a wall
+            robot.rigidbody.MoveRotation(robot.rigidbody.rotation * Quaternion.AngleAxis(180, Vector3.up));
             patrolState.state.Destroy();
             patrolState.state = new RotateState(robot, patrolState);
         }
