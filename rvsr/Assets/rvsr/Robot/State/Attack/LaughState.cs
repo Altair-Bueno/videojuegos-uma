@@ -26,6 +26,7 @@ namespace rvsr.Robot.State.Attack
         public void Update()
         {
             timer -= Time.deltaTime;
+            robot.nose.transform.localRotation = Quaternion.Euler(new Vector3(Mathf.Sin(timer * robot.movementSpeed) * robot.noseAmplitude,0,0)); 
 
             if (timer <= 0)
             {
@@ -36,6 +37,7 @@ namespace rvsr.Robot.State.Attack
 
         public void Destroy()
         {
+            robot.nose.transform.localRotation = Quaternion.identity;
             robot.renderer.material = oldMaterial;
         }
     }

@@ -30,6 +30,7 @@ namespace rvsr.Robot
         public Material laughStateMaterial;
         public float laughMinDuration = 2;
         public float laughMaxDuration = 6;
+        public float noseAmplitude = 3;
 
         // Hit state
         public float hitSpeed = 20;
