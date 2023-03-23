@@ -668,26 +668,27 @@ MonoBehaviour:
   rigidbody: {fileID: 829750398}
   renderer: {fileID: 829750400}
   navMeshAgent: {fileID: 829750403}
-  nose: {fileID: 0}
+  nose: {fileID: 1159124157}
   rabbitLayerMask:
     serializedVersion: 2
     m_Bits: 65
   rabbitNoisesLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  movementSpeed: 5.28
+  movementSpeed: 5
   hearRadious: 10
   missile: {fileID: 3550738753654797755, guid: c8fc0949adb754b1596dbc971e141a7a, type: 3}
   laughStateMaterial: {fileID: 2100002, guid: 31f113a7d277141099c9ed9fc0296635, type: 3}
   laughMinDuration: 2
   laughMaxDuration: 6
+  noseAmplitude: 12
   hitSpeed: 24.97
   hitDistance: 65.9
   hitSphereMaterial: {fileID: 2100000, guid: 65e480cfdb29041afa3682afd88a8162, type: 2}
-  patrolMinDistance: 5
-  patrolMaxDistance: 6.9
-  rotateMinDuration: 0.09
-  rotateMaxDuration: 2.56
+  patrolMinDistance: 2
+  patrolMaxDistance: 4
+  rotateMinDuration: 0
+  rotateMaxDuration: 0.1
 --- !u!54 &829750398
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -774,15 +775,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829750396}
-  m_LocalRotation: {x: -0, y: -0.94211227, z: -0, w: 0.33529767}
-  m_LocalPosition: {x: 49.28, y: 6.6, z: 31.27}
+  m_LocalRotation: {x: -0, y: -0.42785344, z: -0, w: 0.9038482}
+  m_LocalPosition: {x: 48.96, y: 6.8, z: 4.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1159124158}
   m_Father: {fileID: 0}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: -140.819, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -50.663, z: 0}
 --- !u!195 &829750403
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1293,7 +1294,6 @@ GameObject:
   - component: {fileID: 1180026467}
   - component: {fileID: 1180026470}
   - component: {fileID: 1180026469}
-  - component: {fileID: 1180026468}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -1316,19 +1316,6 @@ Transform:
   m_Father: {fileID: 1159124158}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1180026468
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1180026466}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1180026469
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2125,7 +2112,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 059659377357c7f4da639e9b3ab32204, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 42.19
+      value: 48.17
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 059659377357c7f4da639e9b3ab32204, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2133,7 +2120,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 059659377357c7f4da639e9b3ab32204, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.67
+      value: 22.62
       objectReference: {fileID: 0}
     - target: {fileID: 400108, guid: 059659377357c7f4da639e9b3ab32204, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2215,15 +2202,15 @@ MonoBehaviour:
   missileLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  movementSpeed: 2.44
-  hearRadious: 8.86
+  movementSpeed: 3
+  hearRadious: 7.79
   campFires:
   - {fileID: 1781930394}
   - {fileID: 663560979}
   - {fileID: 1453244127}
   - {fileID: 1917446303}
-  shockMinDuration: 2
-  shockMaxDuration: 2.5
+  shockMinDuration: 4
+  shockMaxDuration: 6
   hideDuration: 1
   hideAnimationDuration: 3
   hideAnimationCurve:

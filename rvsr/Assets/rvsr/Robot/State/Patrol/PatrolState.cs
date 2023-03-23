@@ -36,5 +36,10 @@ namespace rvsr.Robot.State.Patrol
         {
             state.Destroy();
         }
+
+        public void OnCollision(Collision collision)
+        {
+            state.OnCollision(collision);
+        }
     }
 }
