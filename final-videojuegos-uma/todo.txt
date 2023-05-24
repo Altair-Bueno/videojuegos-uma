@@ -1,0 +1,4 @@
+- Script de misiones: Recoger objeto con tag X
+- Recogida de objetos
+- Animaciones de mixamo
+- Integración con ChatGPT

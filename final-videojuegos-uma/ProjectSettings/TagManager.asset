@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Cherry
+  - Cheese
+  - Banana
+  - Watermelon
   layers:
   - Default
   - TransparentFX
@@ -13,13 +17,13 @@ TagManager:
   - UI
   - Terrain
   - Pickup
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Buildings
+  - Sky
+  - Rocks
+  - Path
+  - Vegetation
+  - Props
+  - Interactive
   - 
   - 
   - 
