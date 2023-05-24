@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -19,7 +20,7 @@ public class GirlCharacterMain : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine(nameof(GirlCharacterMainCorutine));
+        StartCoroutine(GirlCharacterMainCorutine());
     }
 
     IEnumerator GirlCharacterMainCorutine()
@@ -28,7 +29,22 @@ public class GirlCharacterMain : MonoBehaviour
         yield return SearchCorutine(questProviderLayerMask);
 
         // Get near the quest NPC
-        var questProvider = visionCone.GetOnSight().First();
+        var questProviderHit = visionCone.GetOnSight().First();
+        yield return GoToCorutine(navMeshAgent, questProviderHit.transform.position);
+        var questProvider = questProviderHit.transform.gameObject.GetComponent<QuestProvider>();
+
+        yield return questProvider.StartQuest();
+
+        // Look for the objective
+        do
+        {
+            yield return SearchCorutine(pickupLayerMask);
+        } while (!visionCone.GetOnSight().Any(x => x.transform.CompareTag(questProvider.objetive)));
+
+        var objetiveRaycastHit = visionCone.GetOnSight().First(x => x.transform.CompareTag(questProvider.objetive));
+        yield return GoToCorutine(navMeshAgent, objetiveRaycastHit.transform.position);
+        Destroy(objetiveRaycastHit.transform.gameObject);
+
         yield return GoToCorutine(navMeshAgent, questProvider.transform.position);
     }
 
@@ -44,6 +60,7 @@ public class GirlCharacterMain : MonoBehaviour
         {
             var objective = pointsOfInterest[Random.Range(0, pointsOfInterest.Length)].position;
             yield return GoToCorutine(navMeshAgent, objective);
+            yield return RotateCorutine(transform, 100f, Random.Range(.3f, .5f));
         }
 
         visionCone.enabled = false;
@@ -56,11 +73,22 @@ public class GirlCharacterMain : MonoBehaviour
         yield return new WaitUntil(() =>
             {
                 var condition = !navMeshAgent.pathPending &&
-                    navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance &&
-                    (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
+                                navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance &&
+                                (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f);
                 return condition;
             }
         );
         navMeshAgent.enabled = false;
+    }
+
+    IEnumerator RotateCorutine(Transform transform, float speed, float duration)
+    {
+        var time = 0f;
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            transform.rotation *= Quaternion.Euler(0f, speed * Time.deltaTime, 0);
+            yield return null;
+        }
     }
 }

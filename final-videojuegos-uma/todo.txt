@@ -1,4 +1,13 @@
-- Script de misiones: Recoger objeto con tag X
 - Recogida de objetos
+    - Falta el ponerlo en la mano? Preguntar a nico
 - Animaciones de mixamo
+    - Preguntar a nico como importarlas bien lmao
 - Integración con ChatGPT
+    - TooManyRequests. No entiendo porqué
+    - https://github.com/OkGoDoIt/OpenAI-API-dotnet/issues/39
+    
+
+# Hecho
+
+- Script de misiones: Recoger objeto con tag X
+    - Hecho, falta integración con GPT

@@ -1,5 +1,6 @@
 # Virtual env for Python
 .venv
+**/*local*
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
