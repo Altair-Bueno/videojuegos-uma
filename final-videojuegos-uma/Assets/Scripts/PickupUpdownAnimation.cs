@@ -16,7 +16,7 @@ public class PickupUpdownAnimation : MonoBehaviour
         StartCoroutine(nameof(PickupUpdownAnimationCorutine));
     }
 
-    IEnumerator PickupUpdownAnimationCorutine()
+    public IEnumerator PickupUpdownAnimationCorutine()
     {
         var origin = transform.position;
         var destination = origin + Vector3.up * maxHeight;

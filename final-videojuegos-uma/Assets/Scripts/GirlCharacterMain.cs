@@ -17,6 +17,8 @@ public class GirlCharacterMain : MonoBehaviour
 
     public Transform[] pointsOfInterest = { };
 
+    public GameObject handBone;
+
 
     void Start()
     {
@@ -43,9 +45,23 @@ public class GirlCharacterMain : MonoBehaviour
 
         var objetiveRaycastHit = visionCone.GetOnSight().First(x => x.transform.CompareTag(questProvider.objetive));
         yield return GoToCorutine(navMeshAgent, objetiveRaycastHit.transform.position);
-        Destroy(objetiveRaycastHit.transform.gameObject);
+        
+        var objetiveGameObject = objetiveRaycastHit.transform.gameObject;
+        var pickupRotationAnimation = objetiveGameObject.GetComponent<PickupRotationAnimation>();
+        var pickupUpdownAnimation = objetiveGameObject.GetComponent<PickupUpdownAnimation>();
+        pickupRotationAnimation.enabled = false;
+        pickupUpdownAnimation.StopAllCoroutines();
+        var oldParent = objetiveGameObject.transform.parent;
+        objetiveGameObject.transform.parent = handBone.transform;
+        objetiveGameObject.transform.localPosition = Vector3.zero;
 
         yield return GoToCorutine(navMeshAgent, questProvider.transform.position);
+
+        objetiveGameObject.transform.parent = oldParent;
+        objetiveGameObject.transform.position = this.transform.position + this.transform.forward * .25f;
+        objetiveGameObject.transform.rotation = Quaternion.identity;
+        pickupRotationAnimation.enabled = true;
+        pickupUpdownAnimation.StartCoroutine(pickupUpdownAnimation.PickupUpdownAnimationCorutine());
     }
 
     // Search for something
