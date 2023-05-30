@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,42 +8,53 @@ public class GirlCharacterMain : MonoBehaviour
     // Components
     public NavMeshAgent navMeshAgent;
     public VisionCone visionCone;
+    public TextController textController;
+    public ChatGPT chatGpt;
 
     // LayerMasks
-    public LayerMask questProviderLayerMask = new LayerMask();
-    public LayerMask pickupLayerMask = new LayerMask();
+    public LayerMask questProviderLayerMask;
+    public LayerMask pickupLayerMask;
 
     public Transform[] pointsOfInterest = { };
 
     public GameObject handBone;
 
 
-    void Start()
+    private void Start()
     {
         StartCoroutine(GirlCharacterMainCorutine());
     }
 
-    IEnumerator GirlCharacterMainCorutine()
+    private IEnumerator GirlCharacterMainCorutine()
     {
-        // Search a quest
+        // 1. Search a quest
+        print("Step 1: Search a quest");
         yield return SearchCorutine(questProviderLayerMask);
 
-        // Get near the quest NPC
+        // 2. Get near the quest NPC
+        print("Step 2: Get near the quest NPC");
         var questProviderHit = visionCone.GetOnSight().First();
         yield return GoToCorutine(navMeshAgent, questProviderHit.transform.position);
         var questProvider = questProviderHit.transform.gameObject.GetComponent<QuestProvider>();
 
-        yield return questProvider.StartQuest();
+        // 3. Init the quest
+        print("Step 3: Init the quest");
+        yield return questProvider.StartQuest(this);
 
-        // Look for the objective
+        // 4. Search for the quest object
+        print("Step 4: Search for the quest object");
         do
         {
             yield return SearchCorutine(pickupLayerMask);
         } while (!visionCone.GetOnSight().Any(x => x.transform.CompareTag(questProvider.objetive)));
 
+        // 5. Get nearby the quest object
+        print("Step 5: Get nearby the quest object");
         var objetiveRaycastHit = visionCone.GetOnSight().First(x => x.transform.CompareTag(questProvider.objetive));
         yield return GoToCorutine(navMeshAgent, objetiveRaycastHit.transform.position);
-        
+
+        // 6. Pickup the quest object
+        print("Step 6: Pickup the quest object");
         var objetiveGameObject = objetiveRaycastHit.transform.gameObject;
         var pickupRotationAnimation = objetiveGameObject.GetComponent<PickupRotationAnimation>();
         var pickupUpdownAnimation = objetiveGameObject.GetComponent<PickupUpdownAnimation>();
@@ -55,17 +64,26 @@ public class GirlCharacterMain : MonoBehaviour
         objetiveGameObject.transform.parent = handBone.transform;
         objetiveGameObject.transform.localPosition = Vector3.zero;
 
+        // 7. Return to the quest provider
+        print("Step 7: Return to the quest provider");
         yield return GoToCorutine(navMeshAgent, questProvider.transform.position);
 
+        // 8. Drop down the quest object
+        print("Step 8: Drop down the quest object");
         objetiveGameObject.transform.parent = oldParent;
-        objetiveGameObject.transform.position = this.transform.position + this.transform.forward * .25f;
+        objetiveGameObject.transform.position = transform.position + transform.forward * .25f;
         objetiveGameObject.transform.rotation = Quaternion.identity;
         pickupRotationAnimation.enabled = true;
         pickupUpdownAnimation.StartCoroutine(pickupUpdownAnimation.PickupUpdownAnimationCorutine());
+
+        // 9. End quest
+        yield return questProvider.EndQuest(this);
+
+        print("Scene complete");
     }
 
     // Search for something
-    IEnumerator SearchCorutine(LayerMask objetive)
+    private IEnumerator SearchCorutine(LayerMask objetive)
     {
         visionCone.layerMask = objetive;
         visionCone.enabled = true;
@@ -82,7 +100,7 @@ public class GirlCharacterMain : MonoBehaviour
         visionCone.enabled = false;
     }
 
-    IEnumerator GoToCorutine(NavMeshAgent navMeshAgent, Vector3 objective)
+    private IEnumerator GoToCorutine(NavMeshAgent navMeshAgent, Vector3 objective)
     {
         navMeshAgent.enabled = true;
         navMeshAgent.SetDestination(objective);
@@ -97,7 +115,7 @@ public class GirlCharacterMain : MonoBehaviour
         navMeshAgent.enabled = false;
     }
 
-    IEnumerator RotateCorutine(Transform transform, float speed, float duration)
+    private IEnumerator RotateCorutine(Transform transform, float speed, float duration)
     {
         var time = 0f;
         while (time < duration)

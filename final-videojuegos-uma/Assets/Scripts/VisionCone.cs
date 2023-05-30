@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class VisionCone : MonoBehaviour
@@ -10,18 +6,18 @@ public class VisionCone : MonoBehaviour
     public Vector3 offset = Vector3.zero;
     public float fieldOfView = 60;
     public float distance = 10;
-    public LayerMask layerMask = new LayerMask();
+    public LayerMask layerMask;
     public Color gizmosColor = Color.clear;
 
-    private RaycastHit[] onSight = new RaycastHit[] { };
+    private RaycastHit[] onSight = { };
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         var eyes = GetEyesPosition();
         onSight = Physics.SphereCastAll(eyes, distance, transform.forward, layerMask)

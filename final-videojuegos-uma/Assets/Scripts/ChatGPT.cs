@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenAI_API;
 using OpenAI_API.Chat;
 using OpenAI_API.Models;
 using UnityEngine;
-using UnityEngine.Serialization;
+using YamlDotNet.Serialization;
 
 public class ChatGPT : MonoBehaviour
 {
@@ -17,10 +15,26 @@ public class ChatGPT : MonoBehaviour
     private Conversation conversation;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
+    {
+        ClearChat();
+    }
+
+    public void AppendMessage(string message)
+    {
+        conversation.AppendUserInput(message);
+    }
+
+    public void AppendSystemMessage(string message)
+    {
+        conversation.AppendSystemMessage(message);
+    }
+
+    public void ClearChat()
     {
         api = new OpenAIAPI(openaiKeyAsset.text);
-        var lore = JsonUtility.FromJson<ChatGPTStory>(loreAsset.text);
+        var deserializer = new DeserializerBuilder().Build();
+        var lore = deserializer.Deserialize<ChatGPTStory>(loreAsset.text);
         var config = new ChatRequest();
         config.Model = Model.ChatGPTTurbo;
         conversation = api.Chat.CreateConversation(config);
@@ -32,11 +46,6 @@ public class ChatGPT : MonoBehaviour
         }
     }
 
-    public void AppendMessage(string message)
-    {
-        conversation.AppendUserInput(message);
-    }
-
     public async Task<string> GetResponse()
     {
         var response = await conversation.GetResponseFromChatbotAsync();
@@ -45,14 +54,14 @@ public class ChatGPT : MonoBehaviour
 }
 
 [Serializable]
-class ChatGPTStory
+internal class ChatGPTStory
 {
     public string main;
     public ChatGPTExample[] examples;
 }
 
 [Serializable]
-class ChatGPTExample
+internal class ChatGPTExample
 {
     public string userInput;
     public string response;

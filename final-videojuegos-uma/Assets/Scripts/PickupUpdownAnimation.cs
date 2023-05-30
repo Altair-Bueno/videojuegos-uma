@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PickupUpdownAnimation : MonoBehaviour
 {
@@ -11,7 +9,7 @@ public class PickupUpdownAnimation : MonoBehaviour
     public float maxHeight = 1;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         StartCoroutine(nameof(PickupUpdownAnimationCorutine));
     }
@@ -29,7 +27,7 @@ public class PickupUpdownAnimation : MonoBehaviour
         }
     }
 
-    IEnumerator TranslateCorutine(Vector3 origin, Vector3 destination)
+    private IEnumerator TranslateCorutine(Vector3 origin, Vector3 destination)
     {
         for (var timer = 0f; timer < animationDuration; timer += Time.deltaTime)
         {
@@ -37,6 +35,7 @@ public class PickupUpdownAnimation : MonoBehaviour
             transform.position = Vector3.Lerp(origin, destination, value);
             yield return null;
         }
+
         transform.position = destination;
     }
 }

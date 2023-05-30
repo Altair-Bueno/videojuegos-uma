@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,13 +10,13 @@ public class AnimationParameter : MonoBehaviour
     private int id;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         id = Animator.StringToHash(animatorParameter);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         var speed = navMeshAgent.enabled ? navMeshAgent.speed : 0;
         animator.SetFloat(id, speed);
